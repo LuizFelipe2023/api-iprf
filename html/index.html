@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Calculadora de Salário Líquido</title>
+   
+</head>
+<body>
+    <div>
+      <label for="salarioBruto">Salário Bruto:</label>
+      <input type="number" name="salarioBruto" id="salarioBruto">
+
+      <button onclick="calcular()">Calcular</button>
+    </div>
+
+    <div id="resultado"></div>
+
+    <script>
+         const calcular = () =>{
+               const salarioBruto = document.getElementById('salarioBruto').value;
+               const url = `http://localhost:3000/calcular?salarioBruto=${salarioBruto}`;
+               fetch(url)
+                     .then(response=>response.json())
+                     .then(data=>{
+                          const resultado = document.getElementById('resultado');
+                          resultado.innerHTML = `<p>INSS: ${data.inss}</p> <p>IPRF: ${data.iprf}</p> <p>Salario Liquido: ${data.salarioLiquido}</p>`;
+                     })
+                     .catch(error=>console.error('Ocorreu um erro ao obter os dados'));
+         }
+    </script>
+</body>
+</html>
